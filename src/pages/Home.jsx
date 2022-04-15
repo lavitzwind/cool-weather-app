@@ -39,7 +39,7 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   flex-grow: 1;
-  border: 3px solid black;
+  border: 3px solid aliceblue;
   border-radius: 10px;
   padding: 20px;
   box-shadow: 1px 1px 2.5px #000;
