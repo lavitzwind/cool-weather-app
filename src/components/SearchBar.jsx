@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import SearchIcon from "@mui/icons-material/Search";
-import MenuIcon from "@mui/icons-material/Menu";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
 import LocationSearchingIcon from "@mui/icons-material/LocationSearching";
 
 const Container = styled.div`
@@ -92,7 +92,7 @@ const SearchBar = () => {
   return (
     <Container>
       <Btn>
-        <MenuIcon />
+        <MoreVertIcon />
       </Btn>
       <Form>
         <Input
