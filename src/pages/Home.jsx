@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import CurrentForecast from "../components/CurrentForecast";
 import SearchBar from "../components/SearchBar";
+import DailyForecast from "../components/DailyForecast";
 
 const Container = styled.div`
   display: flex;
@@ -51,6 +52,7 @@ const Home = () => {
       <Wrapper>
         <SearchBar />
         <CurrentForecast />
+        <DailyForecast />
       </Wrapper>
     </Container>
   );

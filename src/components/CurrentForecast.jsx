@@ -58,7 +58,7 @@ const Wind = styled.div`
 `;
 
 const Hr = styled.hr`
-  width: 90%;
+  width: 60%;
   border: 1px solid rgba(255, 255, 255, 0.6);
   margin: 2rem 0 1rem 0;
 `;
