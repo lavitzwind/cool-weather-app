@@ -57,6 +57,12 @@ const Wind = styled.div`
   color: rgba(255, 255, 255, 0.6);
 `;
 
+const Hr = styled.hr`
+  width: 90%;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  margin: 2rem 0 1rem 0;
+`;
+
 const CurrentForecast = () => {
   return (
     <Container>
@@ -72,6 +78,7 @@ const CurrentForecast = () => {
         </Temp>
         <Feels>Feels like 8°</Feels>
         <Wind>Wind 5 m/s</Wind>
+        <Hr />
       </Wrapper>
     </Container>
   );
