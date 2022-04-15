@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import CurrentForecast from "../components/CurrentForecast";
 import SearchBar from "../components/SearchBar";
 
 const Container = styled.div`
@@ -13,6 +14,22 @@ const Container = styled.div`
   background-blend-mode: overlay;
   background-size: cover;
   padding: 0.5rem;
+
+  visibility: visible;
+  opacity: 1;
+  animation-name: fadeInOpacity;
+  animation-iteration-count: 1;
+  animation-timing-function: ease-in;
+  animation-duration: 1.5s;
+
+  @keyframes fadeInOpacity {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
 `;
 
 const Wrapper = styled.div`
@@ -33,6 +50,7 @@ const Home = () => {
     <Container>
       <Wrapper>
         <SearchBar />
+        <CurrentForecast />
       </Wrapper>
     </Container>
   );

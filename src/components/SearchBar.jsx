@@ -15,8 +15,15 @@ const Form = styled.form`
   align-items: center;
   justify-content: center;
   border-radius: 500px;
-  border: 2px solid #000;
+  border: 3px solid #fff;
   width: calc(80% - 50px);
+
+  &:hover,
+  &:focus-within {
+    filter: drop-shadow(3px 5px 2px rgb(0 0 0 / 0.4));
+    transition: all 0.2s ease-in-out;
+    transform: scale(1.1);
+  }
 `;
 const Input = styled.input`
   width: calc(100% - 50px);
@@ -32,9 +39,19 @@ const Input = styled.input`
 const Button = styled.button`
   background-color: transparent;
   border: none;
-  padding: 0.5rem;
   outline: none;
-  cursor: pointer;
+  color: #fff;
+  &:hover {
+    cursor: pointer;
+  }
+
+  &:hover,
+  &:focus {
+    border: none;
+    filter: drop-shadow(3px 5px 2px rgb(0 0 0 / 0.4));
+    transition: all 0.2s ease-in-out;
+    transform: scale(1.1);
+  }
 `;
 
 const Btn = styled.button`
@@ -43,6 +60,15 @@ const Btn = styled.button`
   padding: 0.5rem;
   outline: none;
   cursor: pointer;
+  color: #fff;
+
+  &:hover,
+  &:focus {
+    border: none;
+    filter: drop-shadow(3px 5px 2px rgb(0 0 0 / 0.4));
+    transition: all 0.2s ease-in-out;
+    transform: scale(1.1);
+  }
 `;
 
 const Btn2 = styled.button`
@@ -51,6 +77,15 @@ const Btn2 = styled.button`
   padding: 0.5rem;
   outline: none;
   cursor: pointer;
+  color: #fff;
+
+  &:hover,
+  &:focus {
+    border: none;
+    filter: drop-shadow(3px 5px 2px rgb(0 0 0 / 0.4));
+    transition: all 0.2s ease-in-out;
+    transform: scale(1.1);
+  }
 `;
 
 const SearchBar = () => {
