@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import SearchBar from "../components/SearchBar";
 
 const Container = styled.div`
   display: flex;
@@ -21,7 +22,7 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   flex-grow: 1;
-  border: 1px solid black;
+  border: 3px solid black;
   border-radius: 10px;
   padding: 20px;
   box-shadow: 1px 1px 2.5px #000;
@@ -30,7 +31,9 @@ const Wrapper = styled.div`
 const Home = () => {
   return (
     <Container>
-      <Wrapper></Wrapper>
+      <Wrapper>
+        <SearchBar />
+      </Wrapper>
     </Container>
   );
 };
