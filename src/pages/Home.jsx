@@ -4,6 +4,7 @@ import SearchBar from "../components/SearchBar";
 import DailyForecast from "../components/DailyForecast";
 
 const Container = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
