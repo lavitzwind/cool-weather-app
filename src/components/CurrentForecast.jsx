@@ -66,7 +66,7 @@ const Hr = styled.hr`
 `;
 
 const CurrentForecast = ({ API_KEY }) => {
-  const [location, setLocation] = useState([]);
+  const [location, setLocation] = useState({});
   const [isloading, setIsloading] = useState(false);
   const [err, setErr] = useState("");
 
@@ -97,30 +97,34 @@ const CurrentForecast = ({ API_KEY }) => {
 
   return (
     <Container>
-      <Wrapper>
-        {err ? (
-          <div>{err}</div>
-        ) : (
-          <>
-            <Location></Location>
-            {isloading ? (
-              <div>Loading...</div>
-            ) : (
+      {err ? (
+        <div>{err}</div>
+      ) : (
+        <Wrapper>
+          {location?.name && (
+            <>
+              {isloading ? (
+                <div>Loading...</div>
+              ) : (
+                <Location>
+                  {location.name}, {location.sys.country}
+                </Location>
+              )}
               <Desc>{location.weather[0].description}</Desc>
-            )}
-            <Icon
-              src="http://openweathermap.org/img/wn/13d@2x.png"
-              alt="Snow"
-            ></Icon>
-            <Temp>
-              <Unit></Unit>
-            </Temp>
-            <Feels></Feels>
-            <Wind></Wind>
-            <Hr />
-          </>
-        )}
-      </Wrapper>
+              <Icon
+                src={`http://openweathermap.org/img/wn/${location.weather[0].icon}@2x.png`}
+                alt="Snow"
+              ></Icon>
+              <Temp>
+                {Math.trunc(location.main.temp)}°<Unit>c</Unit>
+              </Temp>
+              <Feels>Feels like: {Math.trunc(location.main.feels_like)}°</Feels>
+              <Wind>Wind speed: {Math.trunc(location.wind.speed)} m/s</Wind>
+              <Hr />
+            </>
+          )}
+        </Wrapper>
+      )}
     </Container>
   );
 };
