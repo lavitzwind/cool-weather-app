@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+import axios from "axios";
 import styled from "styled-components";
 import CurrentForecast from "../components/CurrentForecast";
 import SearchBar from "../components/SearchBar";
@@ -48,11 +50,25 @@ const Wrapper = styled.div`
 `;
 
 const Home = () => {
+  const API_KEY = process.env.REACT_APP_API_KEY;
+  const [weatherData, setWeatherData] = useState({});
+
+  const onSearch = async (text) => {
+    try {
+      const res = await axios.get(
+        `https://api.openweathermap.org/data/2.5/weather?q=${text}&units=metric&appid=${API_KEY}`
+      );
+      setWeatherData(res.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <Container>
       <Wrapper>
-        <SearchBar />
-        <CurrentForecast />
+        <SearchBar onSearch={onSearch} />
+        <CurrentForecast API_KEY={API_KEY} />
         <DailyForecast />
       </Wrapper>
     </Container>

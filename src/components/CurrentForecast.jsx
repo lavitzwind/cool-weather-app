@@ -1,4 +1,6 @@
 import styled from "styled-components";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
 const Container = styled.div`
   display: flex;
@@ -63,22 +65,61 @@ const Hr = styled.hr`
   margin: 2rem 0 1rem 0;
 `;
 
-const CurrentForecast = () => {
+const CurrentForecast = ({ API_KEY }) => {
+  const [location, setLocation] = useState([]);
+  const [isloading, setIsloading] = useState(false);
+  const [err, setErr] = useState("");
+
+  console.log(location);
+
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition(getWeather, showError);
+  }, []);
+
+  const showError = () => {
+    setErr("Unable to get location");
+  };
+
+  const getWeather = async (position) => {
+    const lat = position.coords.latitude;
+    const lon = position.coords.longitude;
+    try {
+      setIsloading(true);
+      const res = await axios.get(
+        `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=${API_KEY}`
+      );
+      setLocation(res.data);
+      setIsloading(false);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <Container>
       <Wrapper>
-        <Location>Berlin, DE</Location>
-        <Desc>Light Intensity Drizzle</Desc>
-        <Icon
-          src="http://openweathermap.org/img/wn/13d@2x.png"
-          alt="Snow"
-        ></Icon>
-        <Temp>
-          10°<Unit>c</Unit>
-        </Temp>
-        <Feels>Feels like 8°</Feels>
-        <Wind>Wind 5 m/s</Wind>
-        <Hr />
+        {err ? (
+          <div>{err}</div>
+        ) : (
+          <>
+            <Location></Location>
+            {isloading ? (
+              <div>Loading...</div>
+            ) : (
+              <Desc>{location.weather[0].description}</Desc>
+            )}
+            <Icon
+              src="http://openweathermap.org/img/wn/13d@2x.png"
+              alt="Snow"
+            ></Icon>
+            <Temp>
+              <Unit></Unit>
+            </Temp>
+            <Feels></Feels>
+            <Wind></Wind>
+            <Hr />
+          </>
+        )}
       </Wrapper>
     </Container>
   );

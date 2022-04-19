@@ -133,21 +133,34 @@ const MenuItem = styled.li`
   }
 `;
 
-const SearchBar = () => {
+const SearchBar = ({ onSearch }) => {
   const [open, setOpen] = useState(false);
+  const [search, setSearch] = useState("");
   const ref = useRef();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    onSearch(search);
+    setSearch("");
+  };
 
   useOnClickOutside(ref, () => setOpen(false));
 
   return (
     <Container>
-      <Form>
+      <Form
+        onSubmit={(e) => {
+          handleSubmit(e);
+        }}
+      >
         <Input
           type="text"
           role="searchbox"
           size="40"
           autocomplete="off"
           placeholder="City, State, Country"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
         />
         <Button>
           <SearchIcon />
