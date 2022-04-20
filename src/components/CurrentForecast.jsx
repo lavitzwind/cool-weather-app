@@ -65,9 +65,9 @@ const Hr = styled.hr`
   margin: 2rem 0 1rem 0;
 `;
 
-const CurrentForecast = ({ API_KEY }) => {
+const CurrentForecast = ({ API_KEY, weatherData }) => {
   const [location, setLocation] = useState({});
-  const [isloading, setIsloading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [err, setErr] = useState("");
 
   console.log(location);
@@ -75,6 +75,12 @@ const CurrentForecast = ({ API_KEY }) => {
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(getWeather, showError);
   }, []);
+
+  useEffect(() => {
+    if (weatherData) {
+      setLocation(weatherData);
+    }
+  }, [weatherData]);
 
   const showError = () => {
     setErr("Unable to get location");
@@ -84,12 +90,12 @@ const CurrentForecast = ({ API_KEY }) => {
     const lat = position.coords.latitude;
     const lon = position.coords.longitude;
     try {
-      setIsloading(true);
+      setIsLoading(true);
       const res = await axios.get(
         `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=${API_KEY}`
       );
       setLocation(res.data);
-      setIsloading(false);
+      setIsLoading(false);
     } catch (err) {
       console.log(err);
     }
@@ -103,7 +109,7 @@ const CurrentForecast = ({ API_KEY }) => {
         <Wrapper>
           {location?.name && (
             <>
-              {isloading ? (
+              {isLoading ? (
                 <div>Loading...</div>
               ) : (
                 <Location>

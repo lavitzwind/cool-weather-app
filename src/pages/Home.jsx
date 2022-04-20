@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import axios from "axios";
 import styled from "styled-components";
 import CurrentForecast from "../components/CurrentForecast";
@@ -68,7 +68,7 @@ const Home = () => {
     <Container>
       <Wrapper>
         <SearchBar onSearch={onSearch} />
-        <CurrentForecast API_KEY={API_KEY} />
+        <CurrentForecast API_KEY={API_KEY} weatherData={weatherData} />
         <DailyForecast />
       </Wrapper>
     </Container>
