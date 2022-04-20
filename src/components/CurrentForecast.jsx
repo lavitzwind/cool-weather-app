@@ -122,7 +122,7 @@ const CurrentForecast = ({ API_KEY, weatherData }) => {
                 alt="Snow"
               ></Icon>
               <Temp>
-                {Math.trunc(location.main.temp)}°<Unit>c</Unit>
+                {Math.round(location.main.temp)}°<Unit>c</Unit>
               </Temp>
               <Feels>Feels like: {Math.trunc(location.main.feels_like)}°</Feels>
               <Wind>Wind speed: {Math.trunc(location.wind.speed)} m/s</Wind>
