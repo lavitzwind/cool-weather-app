@@ -69,7 +69,7 @@ const Home = () => {
       <Wrapper>
         <SearchBar onSearch={onSearch} />
         <CurrentForecast API_KEY={API_KEY} weatherData={weatherData} />
-        <DailyForecast />
+        <DailyForecast API_KEY={API_KEY} />
       </Wrapper>
     </Container>
   );

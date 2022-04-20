@@ -70,8 +70,6 @@ const CurrentForecast = ({ API_KEY, weatherData }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [err, setErr] = useState("");
 
-  console.log(location);
-
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(getWeather, showError);
   }, []);

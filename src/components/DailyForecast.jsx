@@ -1,4 +1,6 @@
 import styled from "styled-components";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 const Container = styled.div`
   display: flex;
@@ -65,71 +67,65 @@ const DayLow = styled.p`
   color: rgba(255, 255, 255, 0.6);
 `;
 
-const DailyForecast = () => {
+const DailyForecast = ({ API_KEY }) => {
+  const [dailyForecast, setDailyForecast] = useState({});
+  const [err, setErr] = useState("");
+
+  console.log(dailyForecast);
+
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition(getForecast, showError);
+  }, []);
+
+  const showError = () => {
+    setErr("Unable to get your location");
+  };
+
+  const getForecast = async (position) => {
+    const lat = position.coords.latitude;
+    const lon = position.coords.longitude;
+    try {
+      const res = await axios.get(
+        `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=hourly,minutely&units=metric&appid=${API_KEY}`
+      );
+      setDailyForecast(res.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <Container>
-      <Wrapper>
-        <ForecastDay>
-          <Day>Saturday</Day>
-          <ImgContainer>
-            <Img src="http://openweathermap.org/img/wn/10d@2x.png" alt=""></Img>
-          </ImgContainer>
-          <DaysTemp>
-            <DayHigh>12°</DayHigh>
-            <DayLow>8°</DayLow>
-          </DaysTemp>
-        </ForecastDay>
-        <ForecastDay>
-          <Day>Sunday</Day>
-          <ImgContainer>
-            <Img src="http://openweathermap.org/img/wn/10d@2x.png" alt=""></Img>
-          </ImgContainer>
-          <DaysTemp>
-            <DayHigh>12°</DayHigh>
-            <DayLow>8°</DayLow>
-          </DaysTemp>
-        </ForecastDay>
-        <ForecastDay>
-          <Day>Monday</Day>
-          <ImgContainer>
-            <Img src="http://openweathermap.org/img/wn/10d@2x.png" alt=""></Img>
-          </ImgContainer>
-          <DaysTemp>
-            <DayHigh>12°</DayHigh>
-            <DayLow>8°</DayLow>
-          </DaysTemp>
-        </ForecastDay>
-        <ForecastDay>
-          <Day>Tuesday</Day>
-          <ImgContainer>
-            <Img src="http://openweathermap.org/img/wn/10d@2x.png" alt=""></Img>
-          </ImgContainer>
-          <DaysTemp>
-            <DayHigh>12°</DayHigh>
-            <DayLow>8°</DayLow>
-          </DaysTemp>
-        </ForecastDay>
-        <ForecastDay>
-          <Day>Wednesday</Day>
-          <ImgContainer>
-            <Img src="http://openweathermap.org/img/wn/10d@2x.png" alt=""></Img>
-          </ImgContainer>
-          <DaysTemp>
-            <DayHigh>12°</DayHigh>
-            <DayLow>8°</DayLow>
-          </DaysTemp>
-        </ForecastDay>
-        <ForecastDay>
-          <Day>Thursday</Day>
-          <ImgContainer>
-            <Img src="http://openweathermap.org/img/wn/10d@2x.png" alt=""></Img>
-          </ImgContainer>
-          <DaysTemp>
-            <DayHigh>12°</DayHigh>
-            <DayLow>8°</DayLow>
-          </DaysTemp>
-        </ForecastDay>
-      </Wrapper>
+      {err ? (
+        <div>{err}</div>
+      ) : (
+        <Wrapper>
+          {dailyForecast?.daily && (
+            <>
+              {dailyForecast.daily.slice(1, 7).map((day) => (
+                <ForecastDay key={day.dt}>
+                  <Day>
+                    {new Date(day.dt * 1000)
+                      .toUTCString()
+                      .slice(0, 3)
+                      .toUpperCase()}
+                  </Day>
+                  <ImgContainer>
+                    <Img
+                      src={`http://openweathermap.org/img/wn/${day.weather[0].icon}@2x.png`}
+                      alt={day.weather[0].description}
+                    ></Img>
+                  </ImgContainer>
+                  <DaysTemp>
+                    <DayHigh>max {Math.round(day.temp.max)}° </DayHigh>
+                    <DayLow>min {Math.round(day.temp.min)}° </DayLow>
+                  </DaysTemp>
+                </ForecastDay>
+              ))}
+            </>
+          )}
+        </Wrapper>
+      )}
     </Container>
   );
 };
