@@ -104,30 +104,34 @@ const CurrentForecast = ({ API_KEY, weatherData }) => {
       {err ? (
         <div>{err}</div>
       ) : (
-        <Wrapper>
-          {location?.name && (
-            <>
-              {isLoading ? (
-                <div>Loading...</div>
-              ) : (
-                <Location>
-                  {location.name}, {location.sys.country}
-                </Location>
+        <>
+          {isLoading ? (
+            <div>Loading...</div>
+          ) : (
+            <Wrapper>
+              {location?.name && (
+                <>
+                  <Location>
+                    {location.name}, {location.sys.country}
+                  </Location>
+                  <Desc>{location.weather[0].description}</Desc>
+                  <Icon
+                    src={`http://openweathermap.org/img/wn/${location.weather[0].icon}@2x.png`}
+                    alt={location.weather[0].description}
+                  ></Icon>
+                  <Temp>
+                    {Math.round(location.main.temp)}°<Unit>c</Unit>
+                  </Temp>
+                  <Feels>
+                    Feels like: {Math.round(location.main.feels_like)}°
+                  </Feels>
+                  <Wind>Wind speed: {Math.round(location.wind.speed)} m/s</Wind>
+                  <Hr />
+                </>
               )}
-              <Desc>{location.weather[0].description}</Desc>
-              <Icon
-                src={`http://openweathermap.org/img/wn/${location.weather[0].icon}@2x.png`}
-                alt="Snow"
-              ></Icon>
-              <Temp>
-                {Math.round(location.main.temp)}°<Unit>c</Unit>
-              </Temp>
-              <Feels>Feels like: {Math.round(location.main.feels_like)}°</Feels>
-              <Wind>Wind speed: {Math.round(location.wind.speed)} m/s</Wind>
-              <Hr />
-            </>
+            </Wrapper>
           )}
-        </Wrapper>
+        </>
       )}
     </Container>
   );

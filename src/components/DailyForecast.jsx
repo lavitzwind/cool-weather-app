@@ -17,6 +17,7 @@ const Wrapper = styled.div`
   width: 100%;
   align-items: center;
   justify-content: space-between;
+  margin-top: 2rem;
 `;
 
 const ForecastDay = styled.div`
