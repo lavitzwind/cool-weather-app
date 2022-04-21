@@ -65,7 +65,7 @@ const Hr = styled.hr`
   margin: 2rem 0 1rem 0;
 `;
 
-const CurrentForecast = ({ API_KEY, weatherData }) => {
+const CurrentForecast = ({ API_KEY, weatherData, isLoading2 }) => {
   const [location, setLocation] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [err, setErr] = useState("");
@@ -75,13 +75,15 @@ const CurrentForecast = ({ API_KEY, weatherData }) => {
   }, []);
 
   useEffect(() => {
+    setIsLoading(true);
     if (weatherData) {
       setLocation(weatherData);
     }
+    setIsLoading(false);
   }, [weatherData]);
 
   const showError = () => {
-    setErr("Unable to get location");
+    setErr("Allow the browser to access your location");
   };
 
   const getWeather = async (position) => {
@@ -101,37 +103,30 @@ const CurrentForecast = ({ API_KEY, weatherData }) => {
 
   return (
     <Container>
-      {err ? (
-        <div>{err}</div>
+      {err ? <div>{err}.</div> : null}
+      {isLoading || isLoading2 ? (
+        <div>Loading...</div>
       ) : (
-        <>
-          {isLoading ? (
-            <div>Loading...</div>
-          ) : (
-            <Wrapper>
-              {location?.name && (
-                <>
-                  <Location>
-                    {location.name}, {location.sys.country}
-                  </Location>
-                  <Desc>{location.weather[0].description}</Desc>
-                  <Icon
-                    src={`http://openweathermap.org/img/wn/${location.weather[0].icon}@2x.png`}
-                    alt={location.weather[0].description}
-                  ></Icon>
-                  <Temp>
-                    {Math.round(location.main.temp)}°<Unit>c</Unit>
-                  </Temp>
-                  <Feels>
-                    Feels like: {Math.round(location.main.feels_like)}°
-                  </Feels>
-                  <Wind>Wind speed: {Math.round(location.wind.speed)} m/s</Wind>
-                  <Hr />
-                </>
-              )}
-            </Wrapper>
+        <Wrapper>
+          {location?.name && (
+            <>
+              <Location>
+                {location.name}, {location.sys.country}
+              </Location>
+              <Desc>{location.weather[0].description}</Desc>
+              <Icon
+                src={`http://openweathermap.org/img/wn/${location.weather[0].icon}@2x.png`}
+                alt={location.weather[0].description}
+              ></Icon>
+              <Temp>
+                {Math.round(location.main.temp)}°<Unit>c</Unit>
+              </Temp>
+              <Feels>Feels like: {Math.round(location.main.feels_like)}°</Feels>
+              <Wind>Wind speed: {Math.round(location.wind.speed)} m/s</Wind>
+              <Hr />
+            </>
           )}
-        </>
+        </Wrapper>
       )}
     </Container>
   );

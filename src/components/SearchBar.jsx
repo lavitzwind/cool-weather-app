@@ -138,13 +138,13 @@ const SearchBar = ({ onSearch }) => {
   const [search, setSearch] = useState("");
   const ref = useRef();
 
+  useOnClickOutside(ref, () => setOpen(false));
+
   const handleSubmit = (e) => {
     e.preventDefault();
     onSearch(search);
     setSearch("");
   };
-
-  useOnClickOutside(ref, () => setOpen(false));
 
   return (
     <Container>

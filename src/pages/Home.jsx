@@ -52,13 +52,29 @@ const Wrapper = styled.div`
 const Home = () => {
   const API_KEY = process.env.REACT_APP_API_KEY;
   const [weatherData, setWeatherData] = useState({});
+  const [location, setLocation] = useState({});
+  const [isLoading2, setIsLoading2] = useState(false);
 
   const onSearch = async (text) => {
+    searchLocation(text);
     try {
+      setIsLoading2(true);
       const res = await axios.get(
         `https://api.openweathermap.org/data/2.5/weather?q=${text}&units=metric&appid=${API_KEY}`
       );
       setWeatherData(res.data);
+      setIsLoading2(false);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const searchLocation = async (text) => {
+    try {
+      const res = await axios.get(
+        `http://api.openweathermap.org/geo/1.0/direct?q=${text}&limit=0&appid=${API_KEY}`
+      );
+      setLocation(res.data);
     } catch (err) {
       console.log(err);
     }
@@ -68,8 +84,12 @@ const Home = () => {
     <Container>
       <Wrapper>
         <SearchBar onSearch={onSearch} />
-        <CurrentForecast API_KEY={API_KEY} weatherData={weatherData} />
-        <DailyForecast API_KEY={API_KEY} />
+        <CurrentForecast
+          API_KEY={API_KEY}
+          weatherData={weatherData}
+          isLoading2={isLoading2}
+        />
+        <DailyForecast API_KEY={API_KEY} location={location} />
       </Wrapper>
     </Container>
   );

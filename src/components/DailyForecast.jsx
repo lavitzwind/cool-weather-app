@@ -68,23 +68,28 @@ const DayLow = styled.p`
   color: rgba(255, 255, 255, 0.6);
 `;
 
-const DailyForecast = ({ API_KEY }) => {
+const DailyForecast = ({ API_KEY, location }) => {
   const [dailyForecast, setDailyForecast] = useState({});
-  const [err, setErr] = useState("");
-
-  console.log(dailyForecast);
 
   useEffect(() => {
-    navigator.geolocation.getCurrentPosition(getForecast, showError);
+    navigator.geolocation.getCurrentPosition(getForecast);
   }, []);
 
-  const showError = () => {
-    setErr("Unable to get your location");
-  };
+  useEffect(() => {
+    getForecast();
+  }, [location]);
 
   const getForecast = async (position) => {
-    const lat = position.coords.latitude;
-    const lon = position.coords.longitude;
+    const lat = location[0]?.lat
+      ? location[0].lat
+      : position
+      ? position.coords.latitude
+      : 0;
+    const lon = location[0]?.lon
+      ? location[0].lon
+      : position
+      ? position.coords.longitude
+      : 0;
     try {
       const res = await axios.get(
         `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=hourly,minutely&units=metric&appid=${API_KEY}`
@@ -97,36 +102,32 @@ const DailyForecast = ({ API_KEY }) => {
 
   return (
     <Container>
-      {err ? (
-        <div>{err}</div>
-      ) : (
-        <Wrapper>
-          {dailyForecast?.daily && (
-            <>
-              {dailyForecast.daily.slice(1, 7).map((day) => (
-                <ForecastDay key={day.dt}>
-                  <Day>
-                    {new Date(day.dt * 1000)
-                      .toUTCString()
-                      .slice(0, 3)
-                      .toUpperCase()}
-                  </Day>
-                  <ImgContainer>
-                    <Img
-                      src={`http://openweathermap.org/img/wn/${day.weather[0].icon}@2x.png`}
-                      alt={day.weather[0].description}
-                    ></Img>
-                  </ImgContainer>
-                  <DaysTemp>
-                    <DayHigh>max {Math.round(day.temp.max)}° </DayHigh>
-                    <DayLow>min {Math.round(day.temp.min)}° </DayLow>
-                  </DaysTemp>
-                </ForecastDay>
-              ))}
-            </>
-          )}
-        </Wrapper>
-      )}
+      <Wrapper>
+        {dailyForecast?.daily && (
+          <>
+            {dailyForecast.daily.slice(1, 7).map((day) => (
+              <ForecastDay key={day.dt}>
+                <Day>
+                  {new Date(day.dt * 1000)
+                    .toUTCString()
+                    .slice(0, 3)
+                    .toUpperCase()}
+                </Day>
+                <ImgContainer>
+                  <Img
+                    src={`http://openweathermap.org/img/wn/${day.weather[0].icon}@2x.png`}
+                    alt={day.weather[0].description}
+                  ></Img>
+                </ImgContainer>
+                <DaysTemp>
+                  <DayHigh>max {Math.round(day.temp.max)}° </DayHigh>
+                  <DayLow>min {Math.round(day.temp.min)}° </DayLow>
+                </DaysTemp>
+              </ForecastDay>
+            ))}
+          </>
+        )}
+      </Wrapper>
     </Container>
   );
 };
