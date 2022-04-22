@@ -68,7 +68,7 @@ const DayLow = styled.p`
   color: rgba(255, 255, 255, 0.6);
 `;
 
-const DailyForecast = ({ API_KEY, location, unit }) => {
+const DailyForecast = ({ API_KEY, location, units }) => {
   const [dailyForecast, setDailyForecast] = useState({});
 
   useEffect(() => {
@@ -84,15 +84,15 @@ const DailyForecast = ({ API_KEY, location, unit }) => {
       ? location[0].lat
       : position
       ? position.coords.latitude
-      : null;
+      : 0;
     const lon = location[0]?.lon
       ? location[0].lon
       : position
       ? position.coords.longitude
-      : null;
+      : 0;
     try {
       const res = await axios.get(
-        `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=hourly,minutely&units=${unit}&appid=${API_KEY}`
+        `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=hourly,minutely,alerts&appid=${API_KEY}&units=${units}`
       );
       setDailyForecast(res.data);
     } catch (err) {

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import styled from "styled-components";
 import CurrentForecast from "../components/CurrentForecast";
@@ -53,15 +53,19 @@ const Home = () => {
   const [weatherData, setWeatherData] = useState({});
   const [location, setLocation] = useState({});
   const [isLoading2, setIsLoading2] = useState(false);
-  const [unit, setUnit] = useState("metric");
+  const [units, setUnits] = useState("metric");
   let newText = "";
+
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition(onLocation);
+  }, [units]);
 
   const onSearch = async (text) => {
     searchGeolocation(text);
     try {
       setIsLoading2(true);
       const res = await axios.get(
-        `https://api.openweathermap.org/data/2.5/weather?q=${text}&units=${unit}&appid=${API_KEY}`
+        `https://api.openweathermap.org/data/2.5/weather?q=${text}&appid=${API_KEY}&units=${units}`
       );
       setWeatherData(res.data);
       setIsLoading2(false);
@@ -76,26 +80,27 @@ const Home = () => {
     try {
       setIsLoading2(true);
       const res = await axios.get(
-        `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=${unit}&appid=${API_KEY}`
+        `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=${units}`
       );
       setWeatherData(res.data);
-      setIsLoading2(false);
       newText = res.data.name;
       searchGeolocation(newText);
+      setIsLoading2(false);
     } catch (err) {
       console.log(err);
     }
   };
 
   const refreshWeather = () => {
-    weatherData?.name
-      ? onSearch(weatherData.name)
-      : navigator.geolocation.getCurrentPosition(onLocation);
+    if (weatherData?.name) {
+      onSearch(weatherData.name);
+    } else {
+      navigator.geolocation.getCurrentPosition(onLocation);
+    }
   };
 
   const switchUnits = () => {
-    setUnit(unit === "metric" ? "imperial" : "metric");
-    refreshWeather();
+    setUnits(units === "metric" ? "imperial" : "metric");
   };
 
   const searchGeolocation = async (text) => {
@@ -122,9 +127,9 @@ const Home = () => {
           API_KEY={API_KEY}
           weatherData={weatherData}
           isLoading2={isLoading2}
-          unit={unit}
+          units={units}
         />
-        <DailyForecast API_KEY={API_KEY} location={location} unit={unit} />
+        <DailyForecast API_KEY={API_KEY} location={location} units={units} />
       </Wrapper>
     </Container>
   );
