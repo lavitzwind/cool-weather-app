@@ -78,6 +78,8 @@ const CurrentForecast = ({ API_KEY, weatherData, isLoading2 }) => {
     setIsLoading(true);
     if (weatherData) {
       setLocation(weatherData);
+    } else {
+      navigator.geolocation.getCurrentPosition(getWeather, showError);
     }
     setIsLoading(false);
   }, [weatherData]);

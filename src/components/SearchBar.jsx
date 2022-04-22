@@ -133,7 +133,7 @@ const MenuItem = styled.li`
   }
 `;
 
-const SearchBar = ({ onSearch }) => {
+const SearchBar = ({ onSearch, onLocation, refreshWeather }) => {
   const [open, setOpen] = useState(false);
   const [search, setSearch] = useState("");
   const ref = useRef();
@@ -144,6 +144,14 @@ const SearchBar = ({ onSearch }) => {
     e.preventDefault();
     onSearch(search);
     setSearch("");
+  };
+
+  const handleClick = () => {
+    navigator.geolocation.getCurrentPosition(onLocation);
+  };
+
+  const handleRefresh = () => {
+    refreshWeather();
   };
 
   return (
@@ -166,7 +174,7 @@ const SearchBar = ({ onSearch }) => {
           <SearchIcon />
         </Button>
       </Form>
-      <Btn>
+      <Btn onClick={handleClick}>
         <LocationSearchingIcon />
       </Btn>
       <BtnContainer onClick={() => setOpen(!open)} ref={ref}>
@@ -186,7 +194,7 @@ const SearchBar = ({ onSearch }) => {
           <MenuItem>
             <CandlestickChartIcon /> Switch units
           </MenuItem>
-          <MenuItem>
+          <MenuItem onClick={handleRefresh}>
             <ChangeCircleIcon /> Refresh Weather
           </MenuItem>
         </Menu>

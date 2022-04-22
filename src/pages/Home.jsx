@@ -53,6 +53,7 @@ const Home = () => {
   const [weatherData, setWeatherData] = useState({});
   const [location, setLocation] = useState({});
   const [isLoading2, setIsLoading2] = useState(false);
+  let newText = "";
 
   const onSearch = async (text) => {
     searchLocation(text);
@@ -66,6 +67,29 @@ const Home = () => {
     } catch (err) {
       console.log(err);
     }
+  };
+
+  const onLocation = async (position) => {
+    const lat = position.coords.latitude;
+    const lon = position.coords.longitude;
+    try {
+      setIsLoading2(true);
+      const res = await axios.get(
+        `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=${API_KEY}`
+      );
+      setWeatherData(res.data);
+      setIsLoading2(false);
+      newText = res.data.name;
+      searchLocation(newText);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const refreshWeather = () => {
+    weatherData?.name
+      ? onSearch(weatherData.name)
+      : navigator.geolocation.getCurrentPosition(onLocation);
   };
 
   const searchLocation = async (text) => {
@@ -82,7 +106,11 @@ const Home = () => {
   return (
     <Container>
       <Wrapper>
-        <SearchBar onSearch={onSearch} />
+        <SearchBar
+          onSearch={onSearch}
+          onLocation={onLocation}
+          refreshWeather={refreshWeather}
+        />
         <CurrentForecast
           API_KEY={API_KEY}
           weatherData={weatherData}
