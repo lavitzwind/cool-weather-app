@@ -18,7 +18,19 @@ const Container = styled.div`
   background-blend-mode: overlay;
   background-size: cover;
   padding: 0.5rem;
+`;
 
+const Wrapper = styled.div`
+  width: 100%;
+  max-width: 700px;
+  max-height: 1050px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  border: 3px solid aliceblue;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 1px 1px 2.5px #000;
   visibility: visible;
   opacity: 1;
   animation-name: fadeInOpacity;
@@ -34,19 +46,6 @@ const Container = styled.div`
       opacity: 1;
     }
   }
-`;
-
-const Wrapper = styled.div`
-  width: 100%;
-  max-width: 700px;
-  max-height: 1050px;
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-  border: 3px solid aliceblue;
-  border-radius: 10px;
-  padding: 20px;
-  box-shadow: 1px 1px 2.5px #000;
 `;
 
 const Home = () => {
