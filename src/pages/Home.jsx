@@ -57,7 +57,7 @@ const Home = () => {
   let newText = "";
 
   useEffect(() => {
-    navigator.geolocation.getCurrentPosition(onLocation);
+    refreshWeather();
   }, [units]);
 
   const onSearch = async (text) => {
