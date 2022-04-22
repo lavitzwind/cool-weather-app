@@ -56,7 +56,7 @@ const Home = () => {
   let newText = "";
 
   const onSearch = async (text) => {
-    searchLocation(text);
+    searchGeolocation(text);
     try {
       setIsLoading2(true);
       const res = await axios.get(
@@ -80,7 +80,7 @@ const Home = () => {
       setWeatherData(res.data);
       setIsLoading2(false);
       newText = res.data.name;
-      searchLocation(newText);
+      searchGeolocation(newText);
     } catch (err) {
       console.log(err);
     }
@@ -92,7 +92,7 @@ const Home = () => {
       : navigator.geolocation.getCurrentPosition(onLocation);
   };
 
-  const searchLocation = async (text) => {
+  const searchGeolocation = async (text) => {
     try {
       const res = await axios.get(
         `http://api.openweathermap.org/geo/1.0/direct?q=${text}&limit=0&appid=${API_KEY}`

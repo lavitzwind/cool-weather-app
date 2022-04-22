@@ -84,12 +84,12 @@ const DailyForecast = ({ API_KEY, location }) => {
       ? location[0].lat
       : position
       ? position.coords.latitude
-      : 0;
+      : null;
     const lon = location[0]?.lon
       ? location[0].lon
       : position
       ? position.coords.longitude
-      : 0;
+      : null;
     try {
       const res = await axios.get(
         `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=hourly,minutely&units=metric&appid=${API_KEY}`
