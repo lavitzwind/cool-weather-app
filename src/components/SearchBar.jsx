@@ -71,8 +71,7 @@ const Btn = styled.button`
   cursor: pointer;
   color: #fff;
 
-  &:hover,
-  &:focus {
+  &:hover {
     border: none;
     filter: drop-shadow(3px 5px 2px rgb(0 0 0 / 0.4));
     transition: all 0.2s ease-in-out;
@@ -133,7 +132,7 @@ const MenuItem = styled.li`
   }
 `;
 
-const SearchBar = ({ onSearch, onLocation, refreshWeather }) => {
+const SearchBar = ({ onSearch, onLocation, refreshWeather, switchUnits }) => {
   const [open, setOpen] = useState(false);
   const [search, setSearch] = useState("");
   const ref = useRef();
@@ -152,6 +151,10 @@ const SearchBar = ({ onSearch, onLocation, refreshWeather }) => {
 
   const handleRefresh = () => {
     refreshWeather();
+  };
+
+  const handleSwitch = () => {
+    switchUnits();
   };
 
   return (
@@ -191,7 +194,7 @@ const SearchBar = ({ onSearch, onLocation, refreshWeather }) => {
           <MenuItem>
             <SaveIcon /> Save location
           </MenuItem>
-          <MenuItem>
+          <MenuItem onClick={handleSwitch}>
             <CandlestickChartIcon /> Switch units
           </MenuItem>
           <MenuItem onClick={handleRefresh}>

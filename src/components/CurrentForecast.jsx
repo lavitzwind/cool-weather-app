@@ -65,7 +65,7 @@ const Hr = styled.hr`
   margin: 2rem 0 1rem 0;
 `;
 
-const CurrentForecast = ({ API_KEY, weatherData, isLoading2 }) => {
+const CurrentForecast = ({ API_KEY, weatherData, isLoading2, unit }) => {
   const [location, setLocation] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [err, setErr] = useState("");
@@ -94,7 +94,7 @@ const CurrentForecast = ({ API_KEY, weatherData, isLoading2 }) => {
     try {
       setIsLoading(true);
       const res = await axios.get(
-        `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=${API_KEY}`
+        `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=${unit}&appid=${API_KEY}`
       );
       setLocation(res.data);
       setIsLoading(false);
