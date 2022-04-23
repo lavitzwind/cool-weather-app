@@ -207,16 +207,26 @@ const SearchBar = ({
           autocomplete="off"
           placeholder="City, State, Country"
           value={search}
+          required
           onChange={(e) => setSearch(e.target.value)}
         />
-        <Button>
+        <Button aria-label="Submit Search" title="Submit Location">
           <SearchIcon />
         </Button>
       </Form>
-      <Btn onClick={handleClick}>
+      <Btn
+        onClick={handleClick}
+        title="Get Geolocation"
+        aria-label="Get the current weather conditions for your current location"
+      >
         <LocationSearchingIcon />
       </Btn>
-      <BtnContainer onClick={() => setOpen(!open)} ref={ref}>
+      <BtnContainer
+        onClick={() => setOpen(!open)}
+        ref={ref}
+        title="Open options"
+        aria-label="Open list of options of the app"
+      >
         <Btn2>
           <MoreVertIcon />
         </Btn2>
@@ -224,16 +234,32 @@ const SearchBar = ({
           onClick={() => setOpen(false)}
           style={{ top: open ? "5vh" : "-55vh" }}
         >
-          <MenuItem onClick={handleHomeLocation}>
+          <MenuItem
+            onClick={handleHomeLocation}
+            title="Home weather"
+            aria-label="Get the current weather conditions for your home location"
+          >
             <HomeIcon /> Home location
           </MenuItem>
-          <MenuItem onClick={handleSaveLocation}>
+          <MenuItem
+            onClick={handleSaveLocation}
+            title="Save Location"
+            aria-label="Save the current location as your home location"
+          >
             <SaveIcon /> Save location
           </MenuItem>
-          <MenuItem onClick={handleSwitch}>
+          <MenuItem
+            onClick={handleSwitch}
+            title="Toggle Measurement Units"
+            aria-label="Toggle between metric and imperial measurement units"
+          >
             <CandlestickChartIcon /> Switch units
           </MenuItem>
-          <MenuItem onClick={handleRefresh}>
+          <MenuItem
+            onClick={handleRefresh}
+            title="Refresh Weather"
+            aria-label="Refresh the current weather conditions"
+          >
             <ChangeCircleIcon /> Refresh Weather
           </MenuItem>
         </Menu>
