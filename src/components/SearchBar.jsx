@@ -1,4 +1,5 @@
 import { useState, useRef } from "react";
+import { mobile, tablet } from "../responsive";
 import useOnClickOutside from "../hooks/useOnClickOutside";
 import styled from "styled-components";
 import SearchIcon from "@mui/icons-material/Search";
@@ -37,11 +38,16 @@ const Input = styled.input`
   width: calc(100% - 50px);
   height: 40px;
   padding: 0.5rem;
-  font-size: 1.2rem;
+  font-size: 1rem;
   outline: none;
   border: none;
   color: #fff;
   background-color: transparent;
+
+  ::placeholder {
+    color: aliceblue;
+    opacity: 1;
+  }
 `;
 
 const Button = styled.button`
@@ -112,19 +118,34 @@ const Menu = styled.ul`
   margin: 0;
   background-color: rgba(0, 0, 0, 0.2);
   filter: drop-shadow(3px 5px 2px rgb(0 0 0 / 0.4));
-  width: 30vw;
+  width: 20vw;
   height: 35vh;
-  top: -45vh;
+  top: 55vh;
   right: calc(-5% - 30px);
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  ${tablet({
+    width: "30vw",
+  })}
+  ${mobile({
+    width: "100vw",
+    alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.8)",
+  })}
 `;
 
 const MenuItem = styled.li`
   margin: 5px 0 5px 30px;
   padding: 10px;
   color: #fff;
-  font-size: 25px;
+  font-size: 1rem;
   width: 90%;
   height: 100%;
+  ${mobile({
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  })}
 
   &:hover {
     cursor: pointer;
@@ -201,7 +222,7 @@ const SearchBar = ({
         </Btn2>
         <Menu
           onClick={() => setOpen(false)}
-          style={{ top: open ? "5vh" : "-45vh" }}
+          style={{ top: open ? "5vh" : "-55vh" }}
         >
           <MenuItem onClick={handleHomeLocation}>
             <HomeIcon /> Home location
