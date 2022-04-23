@@ -14,7 +14,7 @@ const Container = styled.div`
   width: 100%;
   min-height: 100vh;
   background-color: rgba(100, 0, 100, 0.4);
-  background-image: url("assets/foggy.jpg");
+  background-image: url("assets/01d.jpg");
   background-blend-mode: overlay;
   background-size: cover;
   padding: 0.5rem;
@@ -53,10 +53,14 @@ const Home = () => {
   const [weatherData, setWeatherData] = useState({});
   const [location, setLocation] = useState({});
   const [isLoading2, setIsLoading2] = useState(false);
+  const [statusSaver, setStatusSaver] = useState(false);
+  const [homeError, setHomeError] = useState(false);
   const [units, setUnits] = useState(
     JSON.parse(localStorage.getItem("units")) || "metric"
   );
   let newText = "";
+
+  console.log(weatherData);
 
   useEffect(() => {
     refreshWeather();
@@ -106,6 +110,25 @@ const Home = () => {
     setUnits(units === "metric" ? "imperial" : "metric");
   };
 
+  const saveLocation = () => {
+    localStorage.setItem("location", JSON.stringify(weatherData));
+    setStatusSaver(true);
+    setTimeout(() => {
+      setStatusSaver(false);
+    }, 4000);
+  };
+
+  const homeLocation = () => {
+    const location = JSON.parse(localStorage.getItem("location"));
+    location ? setHomeError(false) : setHomeError(true);
+    setTimeout(() => {
+      setHomeError(false);
+    }, 4000);
+    setWeatherData(location);
+    newText = location.name;
+    searchGeolocation(newText);
+  };
+
   const searchGeolocation = async (text) => {
     try {
       const res = await axios.get(
@@ -118,19 +141,29 @@ const Home = () => {
   };
 
   return (
-    <Container>
+    <Container
+      style={{
+        backgroundImage: `url("assets/${
+          weatherData?.weather ? weatherData.weather[0].icon : null
+        }.jpg")`,
+      }}
+    >
       <Wrapper>
         <SearchBar
           onSearch={onSearch}
           onLocation={onLocation}
           refreshWeather={refreshWeather}
           switchUnits={switchUnits}
+          saveLocation={saveLocation}
+          homeLocation={homeLocation}
         />
         <CurrentForecast
           API_KEY={API_KEY}
           weatherData={weatherData}
           isLoading2={isLoading2}
           units={units}
+          statusSaver={statusSaver}
+          homeError={homeError}
         />
         <DailyForecast API_KEY={API_KEY} location={location} units={units} />
       </Wrapper>

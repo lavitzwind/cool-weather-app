@@ -132,7 +132,14 @@ const MenuItem = styled.li`
   }
 `;
 
-const SearchBar = ({ onSearch, onLocation, refreshWeather, switchUnits }) => {
+const SearchBar = ({
+  onSearch,
+  onLocation,
+  refreshWeather,
+  switchUnits,
+  saveLocation,
+  homeLocation,
+}) => {
   const [open, setOpen] = useState(false);
   const [search, setSearch] = useState("");
   const ref = useRef();
@@ -155,6 +162,14 @@ const SearchBar = ({ onSearch, onLocation, refreshWeather, switchUnits }) => {
 
   const handleSwitch = () => {
     switchUnits();
+  };
+
+  const handleSaveLocation = () => {
+    saveLocation();
+  };
+
+  const handleHomeLocation = () => {
+    homeLocation();
   };
 
   return (
@@ -188,10 +203,10 @@ const SearchBar = ({ onSearch, onLocation, refreshWeather, switchUnits }) => {
           onClick={() => setOpen(false)}
           style={{ top: open ? "5vh" : "-45vh" }}
         >
-          <MenuItem>
+          <MenuItem onClick={handleHomeLocation}>
             <HomeIcon /> Home location
           </MenuItem>
-          <MenuItem>
+          <MenuItem onClick={handleSaveLocation}>
             <SaveIcon /> Save location
           </MenuItem>
           <MenuItem onClick={handleSwitch}>

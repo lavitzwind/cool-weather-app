@@ -65,7 +65,14 @@ const Hr = styled.hr`
   margin: 2rem 0 1rem 0;
 `;
 
-const CurrentForecast = ({ API_KEY, weatherData, isLoading2, units }) => {
+const CurrentForecast = ({
+  API_KEY,
+  weatherData,
+  isLoading2,
+  units,
+  statusSaver,
+  homeError,
+}) => {
   const [location, setLocation] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [err, setErr] = useState("");
@@ -103,6 +110,26 @@ const CurrentForecast = ({ API_KEY, weatherData, isLoading2, units }) => {
 
   return (
     <Container>
+      {homeError ? (
+        <h1
+          style={{
+            color: "red",
+            marginBottom: "1rem",
+          }}
+        >
+          You have not saved any location yet!.
+        </h1>
+      ) : null}
+      {statusSaver ? (
+        <h1
+          style={{
+            color: "green",
+            marginBottom: "1rem",
+          }}
+        >
+          Your location was saved successfully!.
+        </h1>
+      ) : null}
       {err ? <div>{err}.</div> : null}
       {isLoading || isLoading2 ? (
         <div>Loading...</div>
