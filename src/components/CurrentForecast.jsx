@@ -119,7 +119,8 @@ const CurrentForecast = ({ API_KEY, weatherData, isLoading2, units }) => {
                 alt={location.weather[0].description}
               ></Icon>
               <Temp>
-                {Math.round(location.main.temp)}°<Unit>c</Unit>
+                {Math.round(location.main.temp)}°
+                <Unit>{units === "metric" ? "C" : "F"}</Unit>
               </Temp>
               <Feels>Feels like: {Math.round(location.main.feels_like)}°</Feels>
               <Wind>Wind speed: {Math.round(location.wind.speed)} m/s</Wind>
