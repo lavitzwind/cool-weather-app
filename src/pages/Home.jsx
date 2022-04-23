@@ -78,6 +78,7 @@ const Home = () => {
       setIsLoading2(false);
     } catch (err) {
       console.log(err);
+      setIsLoading2(false);
     }
   };
 
@@ -95,6 +96,7 @@ const Home = () => {
       setIsLoading2(false);
     } catch (err) {
       console.log(err);
+      setIsLoading2(false);
     }
   };
 
