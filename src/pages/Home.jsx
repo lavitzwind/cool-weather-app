@@ -55,12 +55,11 @@ const Home = () => {
   const [isLoading2, setIsLoading2] = useState(false);
   const [statusSaver, setStatusSaver] = useState(false);
   const [homeError, setHomeError] = useState(false);
+  const [errLocation, setErrLocation] = useState(false);
   const [units, setUnits] = useState(
     JSON.parse(localStorage.getItem("units")) || "metric"
   );
   let newText = "";
-
-  console.log(weatherData);
 
   useEffect(() => {
     refreshWeather();
@@ -78,6 +77,10 @@ const Home = () => {
       setIsLoading2(false);
     } catch (err) {
       console.log(err);
+      setErrLocation(true);
+      setTimeout(() => {
+        setErrLocation(false);
+      }, 3000);
       setIsLoading2(false);
     }
   };
@@ -166,6 +169,7 @@ const Home = () => {
           units={units}
           statusSaver={statusSaver}
           homeError={homeError}
+          errLocation={errLocation}
         />
         <DailyForecast API_KEY={API_KEY} location={location} units={units} />
       </Wrapper>

@@ -72,6 +72,7 @@ const CurrentForecast = ({
   units,
   statusSaver,
   homeError,
+  errLocation,
 }) => {
   const [location, setLocation] = useState({});
   const [isLoading, setIsLoading] = useState(false);
@@ -119,6 +120,16 @@ const CurrentForecast = ({
           }}
         >
           You have not saved any location yet!.
+        </h1>
+      ) : null}
+      {errLocation ? (
+        <h1
+          style={{
+            color: "red",
+            marginBottom: "1rem",
+          }}
+        >
+          Wrong location try again please.
         </h1>
       ) : null}
       {statusSaver ? (
