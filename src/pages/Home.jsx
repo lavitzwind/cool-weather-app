@@ -53,11 +53,14 @@ const Home = () => {
   const [weatherData, setWeatherData] = useState({});
   const [location, setLocation] = useState({});
   const [isLoading2, setIsLoading2] = useState(false);
-  const [units, setUnits] = useState("metric");
+  const [units, setUnits] = useState(
+    JSON.parse(localStorage.getItem("units")) || "metric"
+  );
   let newText = "";
 
   useEffect(() => {
     refreshWeather();
+    localStorage.setItem("units", JSON.stringify(units));
   }, [units]);
 
   const onSearch = async (text) => {
