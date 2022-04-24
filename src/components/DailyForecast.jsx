@@ -90,9 +90,23 @@ const DailyForecast = ({ API_KEY, location, units }) => {
       : position
       ? position.coords.longitude
       : 0;
+    // try {
+    //   const res = await axios.get(
+    //     `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=hourly,minutely,alerts&appid=${API_KEY}&units=${units}`
+    //   );
+    //   setDailyForecast(res.data);
+    // } catch (err) {
+    //   console.log(err);
+    // }
+    const urlDataObj = {
+      lat: lat,
+      lon: lon,
+      units: units,
+    };
     try {
-      const res = await axios.get(
-        `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=hourly,minutely,alerts&appid=${API_KEY}&units=${units}`
+      const res = await axios.post(
+        `./.netlify/functions/get_forecast`,
+        urlDataObj
       );
       setDailyForecast(res.data);
     } catch (err) {

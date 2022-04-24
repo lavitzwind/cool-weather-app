@@ -67,11 +67,33 @@ const Home = () => {
   }, [units]);
 
   const onSearch = async (text) => {
+    // searchGeolocation(text);
+    // try {
+    //   setIsLoading2(true);
+    //   const res = await axios.get(
+    //     `https://api.openweathermap.org/data/2.5/weather?q=${text}&appid=${API_KEY}&units=${units}`
+    //   );
+    //   setWeatherData(res.data);
+    //   setIsLoading2(false);
+    // } catch (err) {
+    //   console.log(err);
+    //   setErrLocation(true);
+    //   setTimeout(() => {
+    //     setErrLocation(false);
+    //   }, 3000);
+    //   setIsLoading2(false);
+    // }
+    const urlDataObj = {
+      units: units,
+      text: text,
+    };
     searchGeolocation(text);
+
     try {
       setIsLoading2(true);
-      const res = await axios.get(
-        `https://api.openweathermap.org/data/2.5/weather?q=${text}&appid=${API_KEY}&units=${units}`
+      const res = await axios.post(
+        "./.netlify/functions/on_search",
+        urlDataObj
       );
       setWeatherData(res.data);
       setIsLoading2(false);
@@ -86,12 +108,32 @@ const Home = () => {
   };
 
   const onLocation = async (position) => {
-    const lat = position.coords.latitude;
-    const lon = position.coords.longitude;
+    //   const lat = position.coords.latitude;
+    //   const lon = position.coords.longitude;
+    //   try {
+    //     setIsLoading2(true);
+    //     const res = await axios.get(
+    //       `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=${units}`
+    //     );
+    //     setWeatherData(res.data);
+    //     newText = res.data.name;
+    //     searchGeolocation(newText);
+    //     setIsLoading2(false);
+    //   } catch (err) {
+    //     console.log(err);
+    //     setIsLoading2(false);
+    //   }
+    // };
+    const urlDataObj = {
+      lat: position.coords.latitude,
+      lon: position.coords.longitude,
+      units: units,
+    };
     try {
       setIsLoading2(true);
-      const res = await axios.get(
-        `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=${units}`
+      const res = await axios.post(
+        "./.netlify/functions/on_location",
+        urlDataObj
       );
       setWeatherData(res.data);
       newText = res.data.name;
@@ -110,7 +152,6 @@ const Home = () => {
       navigator.geolocation.getCurrentPosition(onLocation);
     }
   };
-
   const switchUnits = () => {
     setUnits(units === "metric" ? "imperial" : "metric");
   };
@@ -135,9 +176,21 @@ const Home = () => {
   };
 
   const searchGeolocation = async (text) => {
+    // try {
+    //   const res = await axios.get(
+    //     `https://api.openweathermap.org/geo/1.0/direct?q=${text}&limit=0&appid=${API_KEY}`
+    //   );
+    //   setLocation(res.data);
+    // } catch (err) {
+    //   console.log(err);
+    // }
+    const urlDataObj = {
+      text: text,
+    };
     try {
-      const res = await axios.get(
-        `https://api.openweathermap.org/geo/1.0/direct?q=${text}&limit=0&appid=${API_KEY}`
+      const res = await axios.post(
+        "./.netlify/functions/get_geolocation",
+        urlDataObj
       );
       setLocation(res.data);
     } catch (err) {
