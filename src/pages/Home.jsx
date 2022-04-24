@@ -149,7 +149,7 @@ const Home = () => {
     <Container
       style={{
         backgroundImage: `url("assets/${
-          weatherData?.weather ? weatherData.weather[0].icon : 01n
+          weatherData?.weather ? weatherData.weather[0].icon : "01n"
         }.jpg")`,
       }}
     >
