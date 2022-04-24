@@ -154,7 +154,7 @@ const CurrentForecast = ({
               </Location>
               <Desc>{location.weather[0].description}</Desc>
               <Icon
-                src={`http://openweathermap.org/img/wn/${location.weather[0].icon}@2x.png`}
+                src={`https://openweathermap.org/img/wn/${location.weather[0].icon}@2x.png`}
                 alt={location.weather[0].description}
               ></Icon>
               <Temp>

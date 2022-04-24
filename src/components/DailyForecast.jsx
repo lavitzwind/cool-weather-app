@@ -115,7 +115,7 @@ const DailyForecast = ({ API_KEY, location, units }) => {
                 </Day>
                 <ImgContainer>
                   <Img
-                    src={`http://openweathermap.org/img/wn/${day.weather[0].icon}@2x.png`}
+                    src={`https://openweathermap.org/img/wn/${day.weather[0].icon}@2x.png`}
                     alt={day.weather[0].description}
                   ></Img>
                 </ImgContainer>
