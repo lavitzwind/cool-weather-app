@@ -104,10 +104,7 @@ const DailyForecast = ({ API_KEY, location, units }) => {
       units: units,
     };
     try {
-      const res = await axios.post(
-        `./.netlify/functions/get_forecast`,
-        urlDataObj
-      );
+      const res = await axios.post(`api/get_forecast`, urlDataObj);
       setDailyForecast(res.data);
     } catch (err) {
       console.log(err);

@@ -91,10 +91,7 @@ const Home = () => {
 
     try {
       setIsLoading2(true);
-      const res = await axios.post(
-        "./.netlify/functions/on_search",
-        urlDataObj
-      );
+      const res = await axios.post("api/on_search", urlDataObj);
       setWeatherData(res.data);
       setIsLoading2(false);
     } catch (err) {
@@ -131,10 +128,7 @@ const Home = () => {
     };
     try {
       setIsLoading2(true);
-      const res = await axios.post(
-        "./.netlify/functions/on_location",
-        urlDataObj
-      );
+      const res = await axios.post("api/on_location", urlDataObj);
       setWeatherData(res.data);
       newText = res.data.name;
       searchGeolocation(newText);
@@ -188,10 +182,7 @@ const Home = () => {
       text: text,
     };
     try {
-      const res = await axios.post(
-        "./.netlify/functions/get_geolocation",
-        urlDataObj
-      );
+      const res = await axios.post("api/get_geolocation", urlDataObj);
       setLocation(res.data);
     } catch (err) {
       console.log(err);

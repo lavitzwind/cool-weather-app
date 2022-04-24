@@ -115,10 +115,7 @@ const CurrentForecast = ({
     };
     try {
       setIsLoading(true);
-      const res = await axios.post(
-        `./.netlify/functions/get_weather`,
-        urlDataObj
-      );
+      const res = await axios.post(`api/get_weather`, urlDataObj);
       setLocation(res.data);
       setIsLoading(false);
     } catch (err) {
