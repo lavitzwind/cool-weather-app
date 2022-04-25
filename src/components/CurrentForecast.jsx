@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import axios from "axios";
+import { mobile } from "../responsive";
 import { useEffect, useState } from "react";
 
 const Container = styled.div`
@@ -39,6 +40,10 @@ const Temp = styled.div`
   font-size: 9rem;
   font-weight: 800;
   text-shadow: 1px 0 5px #000;
+  ${mobile({
+    fontSize: "7rem",
+    marginLeft: "1.5rem",
+  })}
 `;
 
 const Unit = styled.span`
@@ -48,6 +53,11 @@ const Unit = styled.span`
   font-size: 2.5rem;
   font-weight: 400;
   color: rgba(255, 255, 255, 0.6) !important;
+  ${mobile({
+    fontSize: "2rem",
+    top: "4.5rem",
+    right: "calc(50% - 4rem)",
+  })}
 `;
 
 const Feels = styled.div`

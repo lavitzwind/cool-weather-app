@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { useState, useEffect } from "react";
+import { mobile } from "../responsive";
 import axios from "axios";
 
 const Container = styled.div`
@@ -25,6 +26,9 @@ const ForecastDay = styled.div`
   align-items: center;
   justify-content: space-between;
   width: 50%;
+  ${mobile({
+    width: "70%",
+  })}
 `;
 
 const DaysTemp = styled.div`

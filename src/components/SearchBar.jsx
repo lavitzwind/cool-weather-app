@@ -1,5 +1,5 @@
 import { useState, useRef } from "react";
-import { mobile, tablet } from "../responsive";
+import { mobile, tablet, mobileS } from "../responsive";
 import useOnClickOutside from "../hooks/useOnClickOutside";
 import styled from "styled-components";
 import SearchIcon from "@mui/icons-material/Search";
@@ -14,18 +14,21 @@ const Container = styled.div`
   position: relative;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
   padding: 5px 10px;
 `;
 
 const Form = styled.form`
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   border-radius: 500px;
   border: 3px solid #fff;
-  width: calc(80% - 50px);
-  margin: 0 0 10px 0;
+  width: calc(90% - 20px);
+  margin: 7px 30px 10px 0;
+  ${mobile({
+    margin: "7px 0px 10px 0",
+  })}
 
   &:hover,
   &:focus-within {
@@ -35,7 +38,7 @@ const Form = styled.form`
   }
 `;
 const Input = styled.input`
-  width: calc(100% - 50px);
+  width: 100%;
   height: 40px;
   padding: 0.5rem;
   font-size: 1rem;
@@ -116,21 +119,25 @@ const Menu = styled.ul`
   list-style: none;
   padding: 0;
   margin: 0;
-  background-color: rgba(0, 0, 0, 0.2);
+  background-color: rgba(0, 0, 0, 0.5);
   filter: drop-shadow(3px 5px 2px rgb(0 0 0 / 0.4));
   width: 20vw;
   height: 35vh;
   top: 55vh;
   right: calc(-5% - 30px);
   border-radius: 5px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
   ${tablet({
     width: "30vw",
   })}
   ${mobile({
-    width: "100vw",
+    width: "95vw",
     alignItems: "center",
     backgroundColor: "rgba(0, 0, 0, 0.8)",
+    right: "Calc(-1% - 30px)",
+  })}
+  ${mobileS({
+    width: "94vw",
   })}
 `;
 
@@ -232,7 +239,7 @@ const SearchBar = ({
         </Btn2>
         <Menu
           onClick={() => setOpen(false)}
-          style={{ top: open ? "5vh" : "-55vh" }}
+          style={{ top: open ? "4vh" : "-55vh" }}
         >
           <MenuItem
             onClick={handleHomeLocation}
