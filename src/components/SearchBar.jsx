@@ -46,6 +46,9 @@ const Input = styled.input`
   border: none;
   color: #fff;
   background-color: transparent;
+  ${mobileS({
+    fontSize: "0.9rem",
+  })}
 
   ::placeholder {
     color: aliceblue;
@@ -58,6 +61,7 @@ const Button = styled.button`
   border: none;
   outline: none;
   color: #fff;
+  margin-right: 10px;
   &:hover {
     cursor: pointer;
   }
@@ -79,6 +83,9 @@ const Btn = styled.button`
   outline: none;
   cursor: pointer;
   color: #fff;
+  ${mobileS({
+    margin: "0px 0px 0px 0px",
+  })}
 
   &:hover {
     border: none;
