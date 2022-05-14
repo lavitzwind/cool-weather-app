@@ -13,7 +13,7 @@ const Container = styled.div`
   justify-content: center;
   width: 100%;
   min-height: 100vh;
-  background-color: rgba(100, 0, 100, 0.4);
+  background-color: rgba(100, 0, 100, 0.3);
   background-image: url("assets/01d.jpg");
   background-blend-mode: overlay;
   background-size: cover;
@@ -27,7 +27,7 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   flex-grow: 1;
-  border: 3px solid aliceblue;
+  border: 1px solid aliceblue;
   border-radius: 10px;
   padding: 20px;
   box-shadow: 1px 1px 2.5px #000;

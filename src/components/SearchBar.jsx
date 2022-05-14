@@ -23,9 +23,10 @@ const Form = styled.form`
   align-items: center;
   justify-content: flex-start;
   border-radius: 500px;
-  border: 3px solid #fff;
+  border: 2px solid #fff;
   width: calc(90% - 20px);
   margin: 7px 30px 10px 0;
+  transition: all 0.2s ease-in-out;
   ${mobile({
     margin: "7px 0px 10px 0",
   })}
