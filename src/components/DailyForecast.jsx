@@ -72,7 +72,7 @@ const DayLow = styled.p`
   color: rgba(255, 255, 255, 0.6);
 `;
 
-const DailyForecast = ({ API_KEY, location, units }) => {
+const DailyForecast = ({ location, units, isLoading2 }) => {
   const [dailyForecast, setDailyForecast] = useState({});
 
   useEffect(() => {
@@ -118,28 +118,34 @@ const DailyForecast = ({ API_KEY, location, units }) => {
   return (
     <Container>
       <Wrapper>
-        {dailyForecast?.daily && (
+        {isLoading2 ? (
+          ""
+        ) : (
           <>
-            {dailyForecast.daily.slice(1, 7).map((day) => (
-              <ForecastDay key={day.dt}>
-                <Day>
-                  {new Date(day.dt * 1000)
-                    .toUTCString()
-                    .slice(0, 3)
-                    .toUpperCase()}
-                </Day>
-                <ImgContainer>
-                  <Img
-                    src={`https://openweathermap.org/img/wn/${day.weather[0].icon}@2x.png`}
-                    alt={day.weather[0].description}
-                  ></Img>
-                </ImgContainer>
-                <DaysTemp>
-                  <DayHigh>max {Math.round(day.temp.max)}° </DayHigh>
-                  <DayLow>min {Math.round(day.temp.min)}° </DayLow>
-                </DaysTemp>
-              </ForecastDay>
-            ))}
+            {dailyForecast?.daily && (
+              <>
+                {dailyForecast.daily.slice(1, 7).map((day) => (
+                  <ForecastDay key={day.dt}>
+                    <Day>
+                      {new Date(day.dt * 1000)
+                        .toUTCString()
+                        .slice(0, 3)
+                        .toUpperCase()}
+                    </Day>
+                    <ImgContainer>
+                      <Img
+                        src={`https://openweathermap.org/img/wn/${day.weather[0].icon}@2x.png`}
+                        alt={day.weather[0].description}
+                      ></Img>
+                    </ImgContainer>
+                    <DaysTemp>
+                      <DayHigh>max {Math.round(day.temp.max)}° </DayHigh>
+                      <DayLow>min {Math.round(day.temp.min)}° </DayLow>
+                    </DaysTemp>
+                  </ForecastDay>
+                ))}
+              </>
+            )}
           </>
         )}
       </Wrapper>

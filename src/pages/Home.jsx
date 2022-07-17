@@ -215,7 +215,11 @@ const Home = () => {
           homeError={homeError}
           errLocation={errLocation}
         />
-        <DailyForecast API_KEY={API_KEY} location={location} units={units} />
+        <DailyForecast
+          location={location}
+          units={units}
+          isLoading2={isLoading2}
+        />
       </Wrapper>
     </Container>
   );

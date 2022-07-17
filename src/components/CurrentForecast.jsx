@@ -76,7 +76,6 @@ const Hr = styled.hr`
 `;
 
 const CurrentForecast = ({
-  API_KEY,
   weatherData,
   isLoading2,
   units,
@@ -186,7 +185,10 @@ const CurrentForecast = ({
                 <Unit>{units === "metric" ? "C" : "F"}</Unit>
               </Temp>
               <Feels>Feels like: {Math.round(location.main.feels_like)}°</Feels>
-              <Wind>Wind speed: {Math.round(location.wind.speed)} m/s</Wind>
+              <Wind>
+                Wind speed: {Math.round(location.wind.speed)}{" "}
+                {units === "metric" ? "m/s" : "mph"}
+              </Wind>
               <Hr />
             </>
           )}
